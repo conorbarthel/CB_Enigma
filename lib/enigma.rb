@@ -5,7 +5,7 @@ class Enigma
     @alphabet = ("a".."z").to_a << " "
   end
 
-  def shift(key, offset)
+  def shifts(key, offset)
     key + offset
   end
 
@@ -20,6 +20,16 @@ class Enigma
     return keys_hash
   end
 
-
+  def offsets(date = Date.today.strftime("%d%m%Y"))
+    date_sqrd = date.to_i * date.to_i
+    four_digit = date_sqrd.to_s[-4..-1]
+    offsets_hash = {}
+    generator = four_digit.split('')
+    offsets_hash[:a] = (generator[0])
+    offsets_hash[:b] = (generator[1])
+    offsets_hash[:c] = (generator[2])
+    offsets_hash[:d] = (generator[3])
+    return offsets_hash
+  end
 
 end
