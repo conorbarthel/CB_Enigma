@@ -5,10 +5,6 @@ class Enigma
     @alphabet = ("a".."z").to_a << " "
   end
 
-  def shifts(key, offset)
-    key + offset
-  end
-
   def shift_keys(random_num = rand(0..99999))
     five_digit = random_num.to_s.rjust(5, '0')
     keys_hash = {}
@@ -30,6 +26,18 @@ class Enigma
     offsets_hash[:c] = (generator[2])
     offsets_hash[:d] = (generator[3])
     return offsets_hash
+  end
+
+  def shifts(keys_input, offsets_input)
+    shifts = {}
+    shift_keys(keys_input).each do |key, value|
+      offsets(offsets_input).each do |off_key, off_value|
+        if key == off_key
+          shifts[key] = (value.to_i + off_value.to_i).to_s
+        end
+      end
+    end
+    shifts
   end
 
 end
