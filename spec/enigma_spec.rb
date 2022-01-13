@@ -41,6 +41,15 @@ RSpec.describe "Enigma" do
       :c => "28",
       :d => "89"
     }
-    expect(enigma.shifts(enigma.keys(6289), enigma.offsets(60690))).to eq(expected)
+    expect(enigma.shifts("6289", "60690")).to eq(expected)
+  end
+
+  it "can code messages" do
+    expected = {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+      }
+    expect(enigma.encrypt("hello world", "02715", "040895"))
   end
 end
