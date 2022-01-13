@@ -14,10 +14,6 @@ RSpec.describe "Enigma" do
     expect(enigma.alphabet.size).to eq(27)
   end
 
-  it "can generate shifts" do
-    expect(enigma.shift(10, 2)).to eq(12)
-  end
-
   it "can make keys" do
     expected = {
       :a => "06",
@@ -36,5 +32,15 @@ RSpec.describe "Enigma" do
       :d => "0"
     }
     expect(enigma.offsets(60690)).to eq(expected)
+  end
+
+  it "can generate shifts" do
+    expected = {
+      :a => "12",
+      :b => "63",
+      :c => "28",
+      :d => "89"
+    }
+    expect(enigma.shifts(enigma.keys(6289), enigma.offsets(60690))).to eq(expected)
   end
 end
