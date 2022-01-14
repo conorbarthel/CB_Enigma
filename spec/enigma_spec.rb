@@ -1,3 +1,4 @@
+require 'spec_helper'
 require './lib/enigma'
 require 'date'
 require 'pry'
@@ -51,6 +52,7 @@ RSpec.describe "Enigma" do
       date: "040895"
     }
       expect(enigma.encrypt("hello world", "02715", "040895")).to eq(expected)
+      expect(enigma.encrypt("hello world")).to be_a(Hash)
   end
 
   it "can decode messages" do

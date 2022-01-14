@@ -1,5 +1,5 @@
 class Enigma
-  attr_reader :alphabet, :alphabet_hash
+  attr_reader :alphabet, :alphabet_hash, :reverse_alphabet, :reverse_alphabet_hash
 
   def initialize
     @alphabet = ("a".."z").to_a << " "
@@ -52,7 +52,7 @@ class Enigma
     shifts
   end
 
-  def encrypt(message, keys = rand(0..99999), date = Date.today.strftime("%d%m%Y"))
+  def encrypt(message, keys = rand(0..99999), date = Date.today.strftime("%d%m%y"))
     coded_message = {
                     :encryption => [],
                     :key => keys.to_s,
