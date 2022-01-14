@@ -1,5 +1,5 @@
 class Enigma
-  attr_reader :alphabet, :alphabet_hash
+  attr_reader :alphabet, :alphabet_hash, :reverse_alphabet, :reverse_alphabet_hash
 
   def initialize
     @alphabet = ("a".."z").to_a << " "
