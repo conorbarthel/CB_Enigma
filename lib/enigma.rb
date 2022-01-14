@@ -3,8 +3,13 @@ class Enigma
 
   def initialize
     @alphabet = ("a".."z").to_a << " "
+    @reverse_alphabet = @alphabet.reverse
     @alphabet_hash = @alphabet.reduce({}) do |acc, letter|
       acc[letter] = @alphabet.index(letter)
+      acc
+    end
+    @reverse_alphabet_hash = @reverse_alphabet.reduce({}) do |acc, letter|
+      acc[letter] = @reverse_alphabet.index(letter)
       acc
     end
   end
@@ -75,5 +80,35 @@ class Enigma
     end
     coded_message[:encryption] = coded_message[:encryption].join
     coded_message
+  end
+
+  def decrypt(message, keys, date = Date.today.strftime("%d%m%Y"))
+    decoded_message = {
+                    :decryption => [],
+                    :key => keys.to_s,
+                    :date => date
+                    }
+    encrypt_shifts = shifts(keys, date)
+    working_message = message.split("")
+    counter = -1
+    working_message.each do |letter|
+      counter += 1
+      rotated_alpha = letter if !(@reverse_alphabet.include?(letter))
+      if counter % 4 == 0
+        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:a].to_i)
+      elsif counter % 4 == 1
+        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:b].to_i)
+      elsif counter % 4 == 2
+        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:c].to_i)
+      elsif counter % 4 == 3
+        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:d].to_i)
+      end
+      character = @reverse_alphabet_hash[letter]
+      shifted_letter = rotated_alpha[character]
+      decoded_message[:decryption] << shifted_letter
+      decoded_message[:decryption]
+    end
+    decoded_message[:decryption] = decoded_message[:decryption].join
+    decoded_message
   end
 end
