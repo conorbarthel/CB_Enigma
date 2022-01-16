@@ -71,6 +71,10 @@ RSpec.describe "Enigma" do
     expect(enigma.decrypt("keder ohulw", "02715")[:date]).to eq(Date.today.strftime("%d%m%y"))
   end
 
+  it "can get the last four digits" do
+    expect(enigma.last_four("keder ohulw")).to eq("hulw")
+  end
+
   it "can find cracked shifts" do
     expected = {
       a: "3",
