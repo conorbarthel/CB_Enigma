@@ -13,6 +13,12 @@ RSpec.describe "Enigma" do
   it "has attributes" do
     expect(enigma.alphabet).to be_a(Array)
     expect(enigma.alphabet.size).to eq(27)
+    expect(enigma.reverse_alphabet.last).to eq("a")
+    expect(enigma.reverse_alphabet_hash.size).to eq(27)
+  end
+
+  it "can make five digit numbers" do
+    expect(enigma.five_digit(23)).to eq("00023")
   end
 
   it "can make keys" do
@@ -62,5 +68,16 @@ RSpec.describe "Enigma" do
       date: "040895"
     }
     expect(enigma.decrypt("keder ohulw", "02715", "040895")).to eq(expected)
+    expect(enigma.decrypt("keder ohulw", "02715")[:date]).to eq(Date.today.strftime("%d%m%y"))
+  end
+
+  it "can find cracked shifts" do
+    expected = {
+      a: "3",
+      b: "0",
+      c: "1",
+      d: "2"
+    }
+    expect(enigma.crack_shifts("xemb")).to eq(expected)
   end
 end

@@ -82,7 +82,7 @@ class Enigma
     coded_message
   end
 
-  def decrypt(message, keys, date = Date.today.strftime("%d%m%Y"))
+  def decrypt(message, keys, date = Date.today.strftime("%d%m%y"))
     decoded_message = {
                     :decryption => [],
                     :key => keys.to_s,
