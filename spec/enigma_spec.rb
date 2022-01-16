@@ -85,6 +85,10 @@ RSpec.describe "Enigma" do
     expect(enigma.cracked_shifts("gtryuxemb")).to eq(expected)
   end
 
+  it "find cracked keys" do
+    expect(enigma.crack_keys("291018")).to eq("08304")
+  end
+
   it "can crack the code" do
     expected = {
        decryption: "hello world end",
