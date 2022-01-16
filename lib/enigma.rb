@@ -112,11 +112,16 @@ class Enigma
     decoded_message
   end
 
-  def last_four(message)
-    message[-4..-1]
+  def num_away(target, letter)
+    @alphabet.index(target) - @alphabet.index(letter)
   end
 
   def cracked_shifts(message)
-
+    last_four = message[-4..-1].split('')
+    cracked_shifts_hash = {}
+    cracked_shifts_hash[:a] = last_four[0]
+    cracked_shifts_hash[:b]
+    cracked_shifts_hash[:c]
+    cracked_shifts_hash[:d]
   end
 end
