@@ -72,7 +72,7 @@ RSpec.describe "Enigma" do
   end
 
   it "can get the last four digits" do
-    expect(enigma.last_four("keder ohulw")).to eq("hulw")
+    expect(enigma.num_away("c", "a")).to eq(2)
   end
 
   it "can find cracked shifts" do
@@ -82,6 +82,6 @@ RSpec.describe "Enigma" do
       c: "1",
       d: "2"
     }
-    expect(enigma.crack_shifts("xemb")).to eq(expected)
+    expect(enigma.crack_shifts("gtryuxemb")).to eq(expected)
   end
 end
