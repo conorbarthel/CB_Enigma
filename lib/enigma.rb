@@ -111,4 +111,12 @@ class Enigma
     decoded_message[:decryption] = decoded_message[:decryption].join
     decoded_message
   end
+
+  def last_four(message)
+    message[-4..-1]
+  end
+
+  def cracked_shifts(message)
+
+  end
 end
