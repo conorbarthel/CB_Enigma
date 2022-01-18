@@ -135,27 +135,30 @@ class Enigma
 
   def cracked_shifts(message)
     last_four = [-4, -3, -2, -1]
+    known_four = [" ", "e", "n", "d"]
+    s_counter = -4
     cracked_shifts_hash = {}
     last_four.each do |idx|
-      if (message.length - 1 - idx) % 4 == 0
-        cracked_shifts_hash[:a] = num_away(message[idx], " ").to_s
-      elsif (message.length - 1 - idx) % 4 == 1
-        cracked_shifts_hash[:b] = num_away(message[idx], "e").to_s
-      elsif (message.length - 1 - idx) % 4 == 2
-        cracked_shifts_hash[:c] = num_away(message[idx], "n").to_s
-      elsif (message.length - 1 - idx) % 4 == 3
-        cracked_shifts_hash[:d] = num_away(message[idx], "d").to_s
+      if (message.length + idx) % 4 == 0
+        cracked_shifts_hash[:a] = num_away(message[idx], known_four[s_counter]).to_s
+      elsif (message.length + idx) % 4 == 1
+        cracked_shifts_hash[:b] = num_away(message[idx], known_four[s_counter]).to_s
+      elsif (message.length + idx) % 4 == 2
+        cracked_shifts_hash[:c] = num_away(message[idx], known_four[s_counter]).to_s
+      elsif (message.length + idx) % 4 == 3
+        cracked_shifts_hash[:d] = num_away(message[idx], known_four[s_counter]).to_s
       end
+      s_counter += 1
     end
     cracked_shifts_hash
   end
 
   def crack(message, date = Date.today.strftime("%d%m%y"))
     cracked_offsets = offsets(date)
-    cracked_keys =
+    #cracked_keys =
     decoded_message = {
                     :decryption => [],
-                    :key => cracked_keys.to_s,
+                    #:key => cracked_keys.to_s,
                     :date => date
                     }
     encrypt_shifts = cracked_shifts(message)
@@ -163,17 +166,18 @@ class Enigma
     counter = -1
     working_message.each do |letter|
       counter += 1
-      rotated_alpha = letter if !(@reverse_alphabet.include?(letter))
+      rotated_alpha = letter if !(@alphabet.include?(letter))
+      binding.pry
       if counter % 4 == 0
-        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:a].to_i)
+        rotated_alpha = @alphabet.rotate(encrypt_shifts[:a].to_i)
       elsif counter % 4 == 1
-        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:b].to_i)
+        rotated_alpha = @alphabet.rotate(encrypt_shifts[:b].to_i)
       elsif counter % 4 == 2
-        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:c].to_i)
+        rotated_alpha = @alphabet.rotate(encrypt_shifts[:c].to_i)
       elsif counter % 4 == 3
-        rotated_alpha = @reverse_alphabet.rotate(encrypt_shifts[:d].to_i)
+        rotated_alpha = @alphabet.rotate(encrypt_shifts[:d].to_i)
       end
-      character = @reverse_alphabet_hash[letter]
+      character = @alphabet_hash[letter]
       shifted_letter = rotated_alpha[character]
       decoded_message[:decryption] << shifted_letter
       decoded_message[:decryption]
