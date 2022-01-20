@@ -63,8 +63,9 @@ class Enigma
     counter = -1
     working_message.each do |letter|
       counter += 1
-      rotated_alpha = letter if !(@alphabet.include?(letter))
-      if counter % 4 == 0
+      if !(@alphabet.include?(letter))
+        coded_message[:encryption] << letter
+      elsif counter % 4 == 0
         rotated_alpha = @alphabet.rotate(encrypt_shifts[:a].to_i)
       elsif counter % 4 == 1
         rotated_alpha = @alphabet.rotate(encrypt_shifts[:b].to_i)
@@ -73,9 +74,11 @@ class Enigma
       elsif counter % 4 == 3
         rotated_alpha = @alphabet.rotate(encrypt_shifts[:d].to_i)
       end
-      character = @alphabet_hash[letter]
-      shifted_letter = rotated_alpha[character]
-      coded_message[:encryption] << shifted_letter
+      if !(rotated_alpha.nil?)
+        character = @alphabet_hash[letter]
+        shifted_letter = rotated_alpha[character]
+        coded_message[:encryption] << shifted_letter  
+      end
       coded_message[:encryption]
     end
     coded_message[:encryption] = coded_message[:encryption].join
